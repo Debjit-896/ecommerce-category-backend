@@ -8,7 +8,9 @@ import lombok.NoArgsConstructor;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
@@ -22,9 +24,7 @@ public class Product {
     private Long id;
 
     @Column(nullable = false)
-    private String name;
-
-    private String brand;
+    private String title;
 
     @Column(length = 1000)
     private String description;
@@ -32,11 +32,23 @@ public class Product {
     @Column(length = 255)
     private String shortDescription;
 
+    private String brand;
+
     @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal price;
 
+    private int discountedPrice;
+    private int discountPercent;
+
     @Column(nullable = false)
     private Integer stockQuantity;
+
+    private String color;
+
+    @Embedded
+    @ElementCollection
+    @Column(name = "sizes")
+    private Set<Size> sizes = new HashSet<>();
 
     private String mainImageUrl;
 
@@ -57,6 +69,12 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "category_item_id")
     private CategoryItem categoryItem;
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Rating> ratings = new ArrayList<>();
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Review> reviews = new ArrayList<>();
 
     // ---------- Lifecycle ----------
     @PrePersist
