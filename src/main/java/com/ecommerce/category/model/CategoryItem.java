@@ -38,7 +38,6 @@ public class CategoryItem {
     // Relationship mapping
     @ManyToOne
     @JoinColumn(name = "category_type_id")
-    @JsonIgnore
     private CategoryType categoryType;
 
     @OneToMany(mappedBy = "categoryItem", cascade = CascadeType.ALL, orphanRemoval = true)

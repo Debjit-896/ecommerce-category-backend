@@ -54,7 +54,8 @@ public class Product {
             name = "product_sizes",
             joinColumns = @JoinColumn(name = "product_id")
     )
-    private Set<Size> sizes = new HashSet<>();
+    @Column(name = "size")
+    private Set<String> sizes = new HashSet<>();
 
     private String mainImageUrl;
 
@@ -77,13 +78,6 @@ public class Product {
     @JsonIgnore
     private CategoryItem categoryItem;
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    @JsonIgnore
-    private List<Rating> ratings = new ArrayList<>();
-
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    @JsonIgnore
-    private List<Review> reviews = new ArrayList<>();
 
     // ---------- Lifecycle ----------
     @PrePersist

@@ -26,6 +26,7 @@ public class CategoryType {
     private String slug;
     private String imageUrl;
     private Boolean returnable = false;
+    private Boolean replacement = false;
     private Boolean warrantyApplicable = false;
 
 
@@ -36,7 +37,6 @@ public class CategoryType {
     // Relationship mapping
     @ManyToOne
     @JoinColumn(name = "category_id", nullable = false)
-    @JsonIgnore
     private Category category;
 
     @OneToMany(mappedBy = "categoryType", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
