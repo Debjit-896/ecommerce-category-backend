@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Data
 @AllArgsConstructor
@@ -18,10 +20,10 @@ public class Address {
     private Long id;
 
     @Column(nullable = false)
-    private int houseNumber;
+    private String houseNumber;
 
     @Column(nullable = false)
-    private String streetName;       // House number, street name, etc.
+    private String streetName;
 
     @Column(nullable = false)
     private String city;
@@ -43,9 +45,25 @@ public class Address {
     @Column(nullable = false)
     private String phoneNumber;
 
+    @Column(updatable = false)
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+
+    // Relationship mapping
     @ManyToOne
     @JoinColumn(name = "user_id")
     @JsonIgnore
     private User user;
 
+    //Life cycle
+    @PrePersist
+    public void prePersist() {
+        createdAt = LocalDateTime.now();
+        updatedAt = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        updatedAt = LocalDateTime.now();
+    }
 }

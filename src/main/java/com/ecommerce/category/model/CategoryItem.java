@@ -1,5 +1,6 @@
 package com.ecommerce.category.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,9 +24,8 @@ public class CategoryItem {
     @Column(nullable = false, length = 100)
     private String name;
 
+    @Column(nullable = false)
     private String imageUrl;
-
-    private String description;
 
     @Column(nullable = false)
     private Boolean active = true;
@@ -38,9 +38,11 @@ public class CategoryItem {
     // Relationship mapping
     @ManyToOne
     @JoinColumn(name = "category_type_id")
+    @JsonIgnore
     private CategoryType categoryType;
 
     @OneToMany(mappedBy = "categoryItem", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Product> products = new ArrayList<>();
 
     // ---------- Lifecycle ----------

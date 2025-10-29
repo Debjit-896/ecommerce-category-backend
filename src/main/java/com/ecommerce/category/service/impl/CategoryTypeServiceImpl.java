@@ -39,10 +39,9 @@ public class CategoryTypeServiceImpl implements CategoryTypeService {
         CategoryType categoryType = categoryTypeRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Category Type with ID " + id + " not found. Update failed."));
 
         categoryType.setName(updatedCategoryType.getName());
-        categoryType.setDescription(categoryType.getDescription());
         categoryType.setImageUrl(updatedCategoryType.getImageUrl());
         categoryType.setReturnable(updatedCategoryType.getReturnable());
-        categoryType.setWarentyApplicable(updatedCategoryType.getWarentyApplicable());
+        categoryType.setWarrantyApplicable(updatedCategoryType.getWarrantyApplicable());
 
         return categoryTypeRepository.save(categoryType);
     }

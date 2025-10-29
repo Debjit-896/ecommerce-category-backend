@@ -39,7 +39,6 @@ public class CategoryItemServiceImpl implements CategoryItemService {
         CategoryItem categoryItem = categoryItemRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Product with ID " + id + " not found. Update failed."));
 
         categoryItem.setName(updatedCategoryItem.getName());
-        categoryItem.setDescription(updatedCategoryItem.getDescription());
         categoryItem.setImageUrl(updatedCategoryItem.getImageUrl());
         categoryItem.setActive(updatedCategoryItem.getActive());
 

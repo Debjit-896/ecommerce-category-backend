@@ -1,5 +1,6 @@
 package com.ecommerce.category.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,8 +23,7 @@ public class Category {
     @Column(nullable = false, unique = true, length = 100)
     private String name; // e.g. "Electronics", "Men's Clothing"
 
-    @Column(length = 255)
-    private String description; // Optional: short info about the category
+    private String slug; // URL-friendly name
 
     private String imageUrl; // For category banner/image (used in frontend)
 
@@ -36,7 +36,8 @@ public class Category {
     private LocalDateTime updatedAt; // Updated when modified
 
     // Relationship mapping
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<CategoryType> categoryTypes = new ArrayList<>();
 
 

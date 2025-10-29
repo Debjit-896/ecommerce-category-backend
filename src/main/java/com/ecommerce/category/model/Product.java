@@ -1,5 +1,6 @@
 package com.ecommerce.category.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -32,22 +33,27 @@ public class Product {
     @Column(length = 255)
     private String shortDescription;
 
+    @Column(nullable = false)
     private String brand;
 
     @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal price;
 
-    private int discountedPrice;
-    private int discountPercent;
+    @Column(precision = 10, scale = 2)
+    private BigDecimal discountedPrice;
+
+    private Integer discountPercent;
 
     @Column(nullable = false)
     private Integer stockQuantity;
 
     private String color;
 
-    @Embedded
     @ElementCollection
-    @Column(name = "sizes")
+    @CollectionTable(
+            name = "product_sizes",
+            joinColumns = @JoinColumn(name = "product_id")
+    )
     private Set<Size> sizes = new HashSet<>();
 
     private String mainImageUrl;
@@ -68,12 +74,15 @@ public class Product {
     // Relationship mapping
     @ManyToOne
     @JoinColumn(name = "category_item_id")
+    @JsonIgnore
     private CategoryItem categoryItem;
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Rating> ratings = new ArrayList<>();
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Review> reviews = new ArrayList<>();
 
     // ---------- Lifecycle ----------

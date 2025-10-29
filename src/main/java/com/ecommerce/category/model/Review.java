@@ -12,22 +12,30 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "reviews")
 public class Review {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(length = 2000)
     private String review;
 
     private LocalDateTime createdAt;
 
-    @ManyToOne
+    // Relationship mapping
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
     @JsonIgnore
     private Product product;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+
+    @PrePersist
+    public void prePersist() {
+        createdAt = LocalDateTime.now();
+    }
 }

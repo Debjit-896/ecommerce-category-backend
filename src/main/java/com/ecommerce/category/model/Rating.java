@@ -2,10 +2,17 @@ package com.ecommerce.category.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Table(name = "ratings")
 public class Rating {
 
     @Id
@@ -17,12 +24,19 @@ public class Rating {
 
     private LocalDateTime createdAt;
 
-    @ManyToOne
+
+    // Relationship mapping
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @JsonIgnore
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id", nullable = false)
+    @JsonIgnore
     private Product product;
+
+    @PrePersist
+    public void prePersist() {
+        createdAt = LocalDateTime.now();
+    }
 }

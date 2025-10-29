@@ -39,7 +39,6 @@ public class CategoryServiceImpl implements CategoryService {
         Category category = categoryRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Category with ID " + id + " not found. Update failed."));
 
         category.setName(updatedCategory.getName());
-        category.setDescription(updatedCategory.getDescription());
         category.setImageUrl(updatedCategory.getImageUrl());
         category.setActive(updatedCategory.getActive());
 
