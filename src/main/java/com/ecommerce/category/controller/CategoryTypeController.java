@@ -14,7 +14,7 @@ import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/category-types")
+@RequestMapping("/catalog/category-types")
 public class CategoryTypeController {
 
     @Autowired

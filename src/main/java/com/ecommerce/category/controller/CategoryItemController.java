@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/category-items")
+@RequestMapping("/catalog/category-items")
 public class CategoryItemController {
 
     @Autowired

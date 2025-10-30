@@ -3,8 +3,10 @@ package com.ecommerce.category.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.web.ErrorResponse;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -17,6 +19,7 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Table(name = "products")
 public class Product {
 
